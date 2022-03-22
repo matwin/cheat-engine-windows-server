@@ -55,7 +55,7 @@ namespace CEServerWindows
                         var output = this.packetManager.ProcessAndGetBytes(command);
                         /* if(command.CommandType != CommandType.CMD_READPROCESSMEMORY)
                              Console.WriteLine(BitConverter.ToString(output).Replace("-", ""));*/
-                      // Console.WriteLine("{0} returned {1} bytes", command.CommandType, output.Length);
+                        Console.WriteLine("{0} returned {1} bytes", command.CommandType, output.Length);
                         writer.Write(output);
                         writer.Flush();
                         command.HandleAfterWrite(client);
@@ -128,6 +128,7 @@ namespace CEServerWindows
             this.RegisterCommandHandler(new VirtualQueryExCommand());
             this.RegisterCommandHandler(new VirtualQueryExFullCommand());
             this.RegisterCommandHandler(new ReadProcessMemoryCommand());
+            this.RegisterCommandHandler(new WriterProcessMemoryCommand());
             this.RegisterCommandHandler(new GetSymbolsFromFileCommand());
             this.RegisterCommandHandler(new AbiCommand());
         }

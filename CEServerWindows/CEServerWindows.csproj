@@ -81,6 +81,7 @@
     <Compile Include="CheatEnginePackets\C2S\ReadProcessMemoryCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\VirtualQueryExFullCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\VirtualQueryExCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WriteProcessMemoryCommand.cs" />
     <Compile Include="CheatEnginePackets\PacketManager.cs" />
     <Compile Include="CheatEnginePackets\S2C\AbiResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\CloseHandleResponse.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="CheatEnginePackets\S2C\ReadProcessMemoryResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\VirtualQueryExFullResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\VirtualQueryExResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WriteProcessMemoryResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CheatEngineServer.cs" />
