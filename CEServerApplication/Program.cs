@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Principal;
 using CEServerWindows;
 
 namespace CEServerApplication
@@ -11,9 +8,27 @@ namespace CEServerApplication
     {
         static void Main(string[] args)
         {
-            CEServerWindows.CheatEngineServer server = new CEServerWindows.CheatEngineServer();
+            CheatEngineServer server = new CEServerWindows.CheatEngineServer();
+
+            Console.WriteLine("Server is listing on port {0}", server.Port);
+            if (!HasAdminRights())
+            {
+                Console.WriteLine("Please run this program with admin rights to allow memory access to other programs.");
+            }
 
             server.StartAsync().Wait();
+        }
+
+        private static bool HasAdminRights()
+        {
+            bool isElevated;
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+
+            return isElevated;
         }
     }
 }

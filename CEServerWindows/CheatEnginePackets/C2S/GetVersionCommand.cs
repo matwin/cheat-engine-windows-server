@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using CEServerWindows.CheatEnginePackets.S2C;
 
@@ -28,6 +29,11 @@ namespace CEServerWindows.CheatEnginePackets.C2S
                 throw new Exceptions.CommandNotInitializedException();
             }
             return new GetVersionResponse();
+        }
+
+        public override void HandleAfterWrite(TcpClient client)
+        {
+            client.Close();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CEServerWindows.CheatEnginePackets.S2C
 {
     public class GetVersionResponse : ICheatEngineResponse
     {
-        public const string VERSION = "CHEATENGINE Network 2.0";
+        public const string VERSION = "CHEATENGINE Network 2.1";
         public string version;
 
         public GetVersionResponse()

@@ -20,9 +20,11 @@ namespace CEServerWindows
         private bool _listening;
         private CancellationToken _token;
 
+        public int Port { get; }
+
 
         public CheatEngineServer(ushort port = 52736) : this(port, new PacketManager())
-        { 
+        {
             this.RegisterDefaultHandlers();
         }
 
@@ -35,6 +37,7 @@ namespace CEServerWindows
         {
             _tcpListener = new TcpListener(IPAddress.Any, port);
             this.packetManager = pm;
+            Port = port;
         }
 
         private void HandleReceivedClient(TcpClient client)
@@ -46,16 +49,18 @@ namespace CEServerWindows
             {
                 try
                 {
-
-                    var command = this.packetManager.ReadNextCommand(reader);
-                    var output = this.packetManager.ProcessAndGetBytes(command);
-                    /* if(command.CommandType != CommandType.CMD_READPROCESSMEMORY)
-                         Console.WriteLine(BitConverter.ToString(output).Replace("-", ""));*/
-                   // Console.WriteLine("{0} returned {1} bytes", command.CommandType, output.Length);
-                    writer.Write(output);
-                    writer.Flush();
-                    //   Handle(stream, writer, cmd);
-
+                    if (clientStream.DataAvailable)
+                    {
+                        var command = this.packetManager.ReadNextCommand(reader);
+                        var output = this.packetManager.ProcessAndGetBytes(command);
+                        /* if(command.CommandType != CommandType.CMD_READPROCESSMEMORY)
+                             Console.WriteLine(BitConverter.ToString(output).Replace("-", ""));*/
+                      // Console.WriteLine("{0} returned {1} bytes", command.CommandType, output.Length);
+                        writer.Write(output);
+                        writer.Flush();
+                        command.HandleAfterWrite(client);
+                        //   Handle(stream, writer, cmd);
+                    }
                 }
                 catch(EndOfStreamException)
                 {
@@ -68,7 +73,7 @@ namespace CEServerWindows
                     Console.WriteLine(e.StackTrace);
                     client.Close();
                     break;
-                } 
+                }
             }
         }
 
@@ -124,6 +129,7 @@ namespace CEServerWindows
             this.RegisterCommandHandler(new VirtualQueryExFullCommand());
             this.RegisterCommandHandler(new ReadProcessMemoryCommand());
             this.RegisterCommandHandler(new GetSymbolsFromFileCommand());
+            this.RegisterCommandHandler(new AbiCommand());
         }
 
         public void RegisterCommandHandler(ICheatEngineCommand command)

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
-using CEServerWindows.CheatEnginePackets.S2C; 
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S
 {
@@ -26,6 +27,11 @@ namespace CEServerWindows.CheatEnginePackets.C2S
         {
             T output = this.Process();
             return output.Serialize();
+        }
+
+        public virtual void HandleAfterWrite(TcpClient client)
+        {
+            // Nothing to do
         }
 
         public void Unintialize()

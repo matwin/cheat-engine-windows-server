@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheatEnginePackets\C2S\AbiCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\CloseHandleCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\CreateToolHelp32SnapshotCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\CheatEngineCommand.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="CheatEnginePackets\C2S\VirtualQueryExFullCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\VirtualQueryExCommand.cs" />
     <Compile Include="CheatEnginePackets\PacketManager.cs" />
+    <Compile Include="CheatEnginePackets\S2C\AbiResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\CloseHandleResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\GetArchitectureResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\GetSymbolsFromFileResponse.cs" />
