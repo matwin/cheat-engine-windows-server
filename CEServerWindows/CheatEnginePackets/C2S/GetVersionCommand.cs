@@ -31,9 +31,10 @@ namespace CEServerWindows.CheatEnginePackets.C2S
             return new GetVersionResponse();
         }
 
-        public override void HandleAfterWrite(TcpClient client)
+        public override bool HandleAfterWrite(TcpClient client)
         {
             client.Close();
+            return true;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -36,6 +37,12 @@ namespace CEServerWindows.CheatEnginePackets.C2S
             var result = WindowsAPI.ToolHelp.Module32First(this.Handle, ref moduleEntry);
 
             return new S2C.Module32Response(result, moduleEntry);
+        }
+
+        public override bool HandleAfterWrite(TcpClient client)
+        {
+            client.Close();
+            return true;
         }
     }
 }

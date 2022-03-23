@@ -16,6 +16,6 @@ namespace CEServerWindows.CheatEnginePackets.C2S
        CommandType CommandType { get; }
        byte[] ProcessAndGetBytes();
 
-       void HandleAfterWrite(TcpClient client);
+       bool HandleAfterWrite(TcpClient client);
     }
 }

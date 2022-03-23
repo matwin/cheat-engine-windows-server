@@ -18,7 +18,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S
 
         public VirtualQueryExCommand() { }
 
-        public VirtualQueryExCommand(IntPtr handle, UInt64 address) 
+        public VirtualQueryExCommand(IntPtr handle, UInt64 address)
         {
             this.Handle = handle;
             this.Address = address;
@@ -35,7 +35,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S
         public override VirtualQueryExResponse Process()
         {
             WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION mbi = new WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION();
-            int ret = WindowsAPI.MemoryAPI.VirtualQueryEx(Handle, (IntPtr)Address, out mbi, (uint)Marshal.SizeOf(mbi));
+            int ret = WindowsAPI.MemoryAPI.VirtualQueryEx(Handle, (UIntPtr)Address, out mbi, (uint)Marshal.SizeOf(mbi));
 
             return new VirtualQueryExResponse(ret, mbi);
         }

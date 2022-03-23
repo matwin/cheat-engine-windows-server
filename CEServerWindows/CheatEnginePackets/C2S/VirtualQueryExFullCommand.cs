@@ -17,7 +17,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S
 
         public VirtualQueryExFullCommand() { }
 
-        public VirtualQueryExFullCommand(IntPtr handle) 
+        public VirtualQueryExFullCommand(IntPtr handle)
         {
             this.Handle = handle;
             this.initialized = true;
@@ -33,15 +33,15 @@ namespace CEServerWindows.CheatEnginePackets.C2S
         public override VirtualQueryExFullResponse Process()
         {
             var regions = new List<WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION>();
-            long currentAddress = 0;
+            ulong currentAddress = 0;
             int ret = 0;
             while(true)
             {
                 WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION mbi = new WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION();
-                ret = WindowsAPI.MemoryAPI.VirtualQueryEx(Handle, (IntPtr)currentAddress, out mbi, (uint)Marshal.SizeOf(mbi));
+                ret = WindowsAPI.MemoryAPI.VirtualQueryEx(Handle, (UIntPtr)currentAddress, out mbi, (uint)Marshal.SizeOf(mbi));
                 if (ret == 0)
                     break;
-                currentAddress += (long)mbi.RegionSize;
+                currentAddress += (ulong)mbi.RegionSize;
                 regions.Add(mbi);
             }
 

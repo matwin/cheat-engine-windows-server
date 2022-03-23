@@ -30,7 +30,6 @@ namespace CEServerWindows
 
         public CheatEngineServer(PacketManager pm) : this(52736, pm)
         {
-
         }
 
         public CheatEngineServer(ushort port, PacketManager pm)
@@ -49,27 +48,27 @@ namespace CEServerWindows
             {
                 try
                 {
-                    if (clientStream.DataAvailable)
+                    var command = this.packetManager.ReadNextCommand(reader);
+                    var output = this.packetManager.ProcessAndGetBytes(command);
+                    /* if(command.CommandType != CommandType.CMD_READPROCESSMEMORY)
+                         Console.WriteLine(BitConverter.ToString(output).Replace("-", ""));*/
+                    Console.WriteLine("{0} returned {1} bytes", command.CommandType, output.Length);
+                    writer.Write(output);
+                    writer.Flush();
+                    if (command.HandleAfterWrite(client))
                     {
-                        var command = this.packetManager.ReadNextCommand(reader);
-                        var output = this.packetManager.ProcessAndGetBytes(command);
-                        /* if(command.CommandType != CommandType.CMD_READPROCESSMEMORY)
-                             Console.WriteLine(BitConverter.ToString(output).Replace("-", ""));*/
-                        Console.WriteLine("{0} returned {1} bytes", command.CommandType, output.Length);
-                        writer.Write(output);
-                        writer.Flush();
-                        command.HandleAfterWrite(client);
-                        //   Handle(stream, writer, cmd);
+                        break;
                     }
+                    //   Handle(stream, writer, cmd);
                 }
-                catch(EndOfStreamException)
+                catch (EndOfStreamException)
                 {
                     client.Close();
                     break;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e + ": "+  e.Message);
+                    Console.WriteLine(e + ": " + e.Message);
                     Console.WriteLine(e.StackTrace);
                     client.Close();
                     break;
@@ -91,10 +90,7 @@ namespace CEServerWindows
                     var tcpClientTask = _tcpListener.AcceptTcpClientAsync();
                     var result = await tcpClientTask;
                     Console.WriteLine("New client");
-                    _ = Task.Run(() =>
-                      {
-                          HandleReceivedClient(result);
-                      }, _token);
+                    _ = Task.Run(() => { HandleReceivedClient(result); }, _token);
                 }
             }
             finally
@@ -137,6 +133,5 @@ namespace CEServerWindows
         {
             this.packetManager.RegisterCommand(command);
         }
-
     }
 }

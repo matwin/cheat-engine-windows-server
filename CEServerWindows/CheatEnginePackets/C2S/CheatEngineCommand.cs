@@ -29,9 +29,9 @@ namespace CEServerWindows.CheatEnginePackets.C2S
             return output.Serialize();
         }
 
-        public virtual void HandleAfterWrite(TcpClient client)
+        public virtual bool HandleAfterWrite(TcpClient client)
         {
-            // Nothing to do
+            return false;
         }
 
         public void Unintialize()
